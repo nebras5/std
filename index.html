@@ -13,6 +13,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #f4f7f9;
         }
+        /* إخفاء شريط التمرير الأفقي والرأسي عند فتح النافذة المنبثقة */
+        .modal-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
@@ -31,13 +35,13 @@
         <form id="auth-form" onsubmit="handleAuth(event)">
             <div class="mb-5">
                 <label for="username" class="block text-sm font-medium text-gray-700 mb-2">اسم المستخدم (ثابت)</label>
-                <input type="text" id="username" required value="user"
+                <input type="text" id="username" required value="std"
                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                        placeholder="اسم المستخدم">
             </div>
             <div class="mb-6">
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور (ثابتة)</label>
-                <input type="password" id="password" required value="123456"
+                <input type="password" id="password" required value="std998877"
                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                        placeholder="********">
             </div>
@@ -63,33 +67,58 @@
             </button>
         </div>
 
-        <p class="text-gray-700 mb-6">لقد تم تسجيل دخولك بنجاح. هذا هو المحتوى الخاص بالصور:</p>
+        <p class="text-gray-700 mb-6">لقد تم تسجيل دخولك بنجاح. انقر على أي صورة لعرضها بحجم أكبر:</p>
 
         <!-- شبكة عرض الصور (صور وهمية) -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            
             <!-- الصورة 1 -->
-            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
-                <img src="blob:https://web.whatsapp.com/a120de0a-64cb-4317-8bcc-f82997308b72="صورة 1" class="w-full h-auto object-cover">
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer" 
+                 onclick="openModal('https://placehold.co/800x600/1e40af/ffffff?text=صورة+1+%28كبيرة%29', 'منظر طبيعي')">
+                <img src="https://scontent.fohs1-1.fna.fbcdn.net/v/t1.15752-9/554203400_1150442633704610_2205860210672647430_n.png?stp=dst-png_s720x720&_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_ohc=z_x6Fq_mmLgQ7kNvwGDk0JC&_nc_oc=AdkEWGwDd6SJaH4YNnGauUQxgMJEOw7bUwWg9lc11XM7WkvU272Dl9tJSYLLyoWEnTA&_nc_ad=z-m&_nc_cid=1204&_nc_zt=23&_nc_ht=scontent.fohs1-1.fna&oh=03_Q7cD3gFa29ejQhJb-06mXjVL-JTceLmF2uv6kJRmXD8-tt2bfg&oe=690B41B5" alt="منظر طبيعي" class="w-full h-auto object-cover">
                 <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">منظر طبيعي</p>
             </div>
+            
             <!-- الصورة 2 -->
-            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
-                <img src="https://placehold.co/400x300/10b981/ffffff?text=صورة+2" alt="صورة 2" class="w-full h-auto object-cover">
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer"
+                 onclick="openModal('https://placehold.co/800x600/10b981/ffffff?text=صورة+2+%28كبيرة%29', 'فنون')">
+                <img src="https://placehold.co/400x300/10b981/ffffff?text=صورة+2" alt="فنون" class="w-full h-auto object-cover">
                 <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">فنون</p>
             </div>
+            
             <!-- الصورة 3 -->
-            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
-                <img src="https://placehold.co/400x300/f59e0b/ffffff?text=صورة+3" alt="صورة 3" class="w-full h-auto object-cover">
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer"
+                 onclick="openModal('https://placehold.co/800x600/f59e0b/ffffff?text=صورة+3+%28كبيرة%29', 'أشخاص')">
+                <img src="https://placehold.co/400x300/f59e0b/ffffff?text=صورة+3" alt="أشخاص" class="w-full h-auto object-cover">
                 <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">أشخاص</p>
             </div>
+            
             <!-- الصورة 4 -->
-            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
-                <img src="https://placehold.co/400x300/ef4444/ffffff?text=صورة+4" alt="صورة 4" class="w-full h-auto object-cover">
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer"
+                 onclick="openModal('https://placehold.co/800x600/ef4444/ffffff?text=صورة+4+%28كبيرة%29', 'هندسة معمارية')">
+                <img src="https://placehold.co/400x300/ef4444/ffffff?text=صورة+4" alt="هندسة معمارية" class="w-full h-auto object-cover">
                 <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">هندسة معمارية</p>
             </div>
         </div>
 
         <p id="user-info" class="mt-8 text-sm text-gray-500 text-center">أنت تستخدم حساب المستخدم الثابت.</p>
+    </div>
+
+    <!-- النافذة المنبثقة لعرض الصورة الكبيرة -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300" style="display: none;">
+        <div class="relative max-w-5xl w-11/12 max-h-full p-4">
+            
+            <!-- زر الإغلاق -->
+            <button onclick="closeModal()" class="absolute top-0 right-0 m-4 text-white text-4xl font-bold leading-none z-10 hover:text-red-500 transition">
+                &times;
+            </button>
+            
+            <!-- حاوية الصورة -->
+            <div class="bg-white rounded-lg shadow-2xl overflow-hidden">
+                <img id="modal-image" src="" alt="" class="w-full h-auto max-h-[80vh] object-contain">
+                <div id="modal-caption" class="p-3 text-center text-lg font-medium text-gray-800"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -103,6 +132,11 @@
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
         const errorMessage = document.getElementById('error-message');
+        
+        // عناصر النافذة المنبثقة
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
 
         /**
          * تحديث حالة الواجهة بناءً على حالة تسجيل الدخول المخزنة في الجلسة
@@ -151,9 +185,39 @@
             updateUI();
         }
         
+        /**
+         * فتح النافذة المنبثقة وعرض الصورة الكبيرة
+         * @param {string} src - مسار (URL) الصورة الكبيرة
+         * @param {string} alt - النص البديل/الوصف للصورة
+         */
+        function openModal(src, alt) {
+            modalImage.src = src;
+            modalImage.alt = alt;
+            modalCaption.textContent = alt;
+            imageModal.style.display = 'flex';
+            document.body.classList.add('modal-open'); // لمنع التمرير خلف النافذة المنبثقة
+        }
+
+        /**
+         * إغلاق النافذة المنبثقة
+         */
+        function closeModal() {
+            imageModal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+
+        // إغلاق النافذة المنبثقة عند النقر خارج الصورة
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                closeModal();
+            }
+        });
+        
         // ربط الدوال بالنافذة لتمكين الوصول من HTML
         window.handleAuth = handleAuth;
         window.signOutUser = signOutUser;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
 
         // بدء تشغيل التطبيق والتحقق من حالة الدخول عند التحميل
         updateUI();
