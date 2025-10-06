@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الصور الخاص - تسجيل الدخول مطلوب</title>
+    <!-- تضمين Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- إعداد خط Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+
+    <!-- العنوان الرئيسي -->
+    <header class="w-full max-w-4xl text-center py-6">
+        <h1 class="text-4xl font-extrabold text-blue-800 tracking-tight">معرض الصور الخاص</h1>
+        <p class="mt-2 text-lg text-gray-600">للوصول إلى المحتوى، يرجى تسجيل الدخول.</p>
+        <hr class="mt-4 border-t-2 border-blue-200">
+    </header>
+
+    <!-- حاوية محتوى تسجيل الدخول (تظهر إذا لم يكن المستخدم مسجلاً) -->
+    <div id="auth-container" class="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl transition duration-300 transform scale-100">
+        <h2 id="auth-title" class="text-3xl font-bold text-center text-gray-800 mb-6">تسجيل الدخول (المستخدم الثابت)</h2>
+
+        <form id="auth-form" onsubmit="handleAuth(event)">
+            <div class="mb-5">
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">اسم المستخدم (ثابت)</label>
+                <input type="text" id="username" required value="user"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                       placeholder="اسم المستخدم">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور (ثابتة)</label>
+                <input type="password" id="password" required value="123456"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                       placeholder="********">
+            </div>
+
+            <button type="submit" id="auth-button"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.01] shadow-lg">
+                تسجيل الدخول
+            </button>
+        </form>
+
+        <p id="error-message" class="text-red-600 text-center mt-4 font-medium" style="display: none;">اسم المستخدم أو كلمة المرور غير صحيحة.</p>
+
+        <!-- تم إزالة زر "إنشاء حساب" -->
+    </div>
+
+    <!-- حاوية معرض الصور (تظهر فقط عند تسجيل الدخول) -->
+    <div id="gallery-container" class="w-full max-w-4xl bg-white p-6 rounded-xl shadow-2xl mt-8" style="display: none;">
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <h2 id="welcome-message" class="text-2xl font-bold text-gray-800">مرحباً بك، أيها المدير!</h2>
+            <button onclick="signOutUser()"
+                    class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300 shadow">
+                تسجيل الخروج
+            </button>
+        </div>
+
+        <p class="text-gray-700 mb-6">لقد تم تسجيل دخولك بنجاح. هذا هو المحتوى الخاص بالصور:</p>
+
+        <!-- شبكة عرض الصور (صور وهمية) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- الصورة 1 -->
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+                <img src="blob:https://web.whatsapp.com/a120de0a-64cb-4317-8bcc-f82997308b72="صورة 1" class="w-full h-auto object-cover">
+                <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">منظر طبيعي</p>
+            </div>
+            <!-- الصورة 2 -->
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+                <img src="https://placehold.co/400x300/10b981/ffffff?text=صورة+2" alt="صورة 2" class="w-full h-auto object-cover">
+                <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">فنون</p>
+            </div>
+            <!-- الصورة 3 -->
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+                <img src="https://placehold.co/400x300/f59e0b/ffffff?text=صورة+3" alt="صورة 3" class="w-full h-auto object-cover">
+                <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">أشخاص</p>
+            </div>
+            <!-- الصورة 4 -->
+            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+                <img src="https://placehold.co/400x300/ef4444/ffffff?text=صورة+4" alt="صورة 4" class="w-full h-auto object-cover">
+                <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">هندسة معمارية</p>
+            </div>
+        </div>
+
+        <p id="user-info" class="mt-8 text-sm text-gray-500 text-center">أنت تستخدم حساب المستخدم الثابت.</p>
+    </div>
+
+    <script>
+        // بيانات الدخول الثابتة
+        const STATIC_USERNAME = 'std'; // يمكن تغيير اسم المستخدم هذا
+        const STATIC_PASSWORD = 'std998877'; // يمكن تغيير كلمة المرور هذه
+
+        // عناصر الواجهة
+        const authContainer = document.getElementById('auth-container');
+        const galleryContainer = document.getElementById('gallery-container');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+
+        /**
+         * تحديث حالة الواجهة بناءً على حالة تسجيل الدخول المخزنة في الجلسة
+         */
+        function updateUI() {
+            // التحقق من وجود مفتاح 'isLoggedIn' في تخزين الجلسة
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+
+            if (isLoggedIn) {
+                authContainer.style.display = 'none';
+                galleryContainer.style.display = 'block';
+            } else {
+                authContainer.style.display = 'block';
+                galleryContainer.style.display = 'none';
+            }
+        }
+
+        /**
+         * معالجة محاولة تسجيل الدخول
+         * @param {Event} event - حدث الإرسال
+         */
+        function handleAuth(event) {
+            event.preventDefault();
+            errorMessage.style.display = 'none';
+
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            // التحقق من صحة بيانات الدخول الثابتة
+            if (username === STATIC_USERNAME && password === STATIC_PASSWORD) {
+                // نجاح تسجيل الدخول
+                sessionStorage.setItem('isLoggedIn', 'true');
+                updateUI();
+            } else {
+                // فشل تسجيل الدخول
+                sessionStorage.setItem('isLoggedIn', 'false');
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        /**
+         * تسجيل الخروج من حساب المستخدم
+         */
+        function signOutUser() {
+            sessionStorage.removeItem('isLoggedIn');
+            updateUI();
+        }
+        
+        // ربط الدوال بالنافذة لتمكين الوصول من HTML
+        window.handleAuth = handleAuth;
+        window.signOutUser = signOutUser;
+
+        // بدء تشغيل التطبيق والتحقق من حالة الدخول عند التحميل
+        updateUI();
+
+    </script>
+</body>
+</html>
