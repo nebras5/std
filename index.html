@@ -99,10 +99,6 @@
                 <img src="https://placehold.co/400x300/ef4444/ffffff?text=صورة+4" alt="هندسة معمارية" class="w-full h-auto object-cover">
                 <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">هندسة معمارية</p>
             </div>
-            <form id="upload-form">
-    <input type="file" id="image-file" name="image-file" accept="image/*" required>
-    <button type="submit" id="upload-button">رفع الصورة</button>
-</form>
         </div>
         <div> 
             <p>opoman123456789@gmail.com
@@ -229,67 +225,6 @@
 
         // بدء تشغيل التطبيق والتحقق من حالة الدخول عند التحميل
         updateUI();
-        <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBwg8b1AxxlACJt3XP9clJOmdS-cJVa--s",
-    authDomain: "std-malik.firebaseapp.com",
-    projectId: "std-malik",
-    storageBucket: "std-malik.firebasestorage.app",
-    messagingSenderId: "19064299697",
-    appId: "1:19064299697:web:35cab63171846f453c4290",
-    measurementId: "G-B4GD97YWEJ"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-        const uploadForm = document.getElementById('upload-form');
-const imageFile = document.getElementById('image-file');
-const galleryGrid = document.querySelector('.grid.gap-4'); // شبكة عرض الصور
-
-uploadForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const file = imageFile.files[0];
-    if (!file) return;
-
-    // 1. تحديد مسار الملف في Firebase Storage (باسم فريد)
-    const fileName = new Date().getTime() + '_' + file.name;
-    const fileRef = storageRef.child('gallery/' + fileName);
-
-    try {
-        // 2. رفع الملف
-        const uploadTask = await fileRef.put(file);
-
-        // 3. الحصول على رابط الصورة (URL) بعد الرفع
-        const imageUrl = await uploadTask.ref.getDownloadURL();
-        
-        // 4. إضافة الصورة الجديدة إلى معرض الصور في HTML
-        const newImageElement = `
-            <div class="rounded-lg overflow-hidden shadow-md group transform hover:scale-[1.03] transition duration-300 cursor-pointer" 
-                 onclick="openModal('${imageUrl}', '${fileName}')">
-                <img src="${imageUrl}" alt="${fileName}" class="w-full h-auto object-cover">
-                <p class="p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">${fileName}</p>
-            </div>
-        `;
-        
-        galleryGrid.insertAdjacentHTML('afterbegin', newImageElement); // أضف الصورة في البداية
-        alert('تم رفع الصورة بنجاح!');
-        uploadForm.reset(); // تفريغ النموذج
-        
-    } catch (error) {
-        console.error("خطأ في الرفع:", error);
-        alert('فشل الرفع. قد تحتاج لتعديل قواعد Firebase Storage.');
-    }
-});
-</script>
 
     </script>
 </body>
